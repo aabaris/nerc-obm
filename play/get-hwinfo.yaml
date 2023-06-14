@@ -1,0 +1,38 @@
+---
+- hosts: PowerEdge
+  connection: local
+  gather_facts: False
+
+  tasks:
+  - name: Get Hardware Inventory via Redfish
+    community.general.redfish_info:
+      category: Systems
+      command: all
+      baseuri: "{{ obm_ip }}"
+      username: "{{ obm_user }}"
+      password: "{{ obm_password }}"
+    register: result_redfish
+
+  - name: Save Refish Inventory
+    copy:
+      content: "{{ result_redfish }}"
+      dest: /opt/nobm/data/redfish-{{ inventory_hostname }}.json
+
+
+  - name: Get Hardware Inventory via RACAMD
+    dellemc.openmanage.idrac_system_info:
+      validate_certs: false
+      idrac_ip:  "{{ obm_ip }}"
+      idrac_user:  "{{ obm_user }}"
+      idrac_password:  "{{ obm_password }}"
+    register: result_racadm
+
+# - name: Save Refish Inventory
+#   copy:
+#     content: "{{ result_redfish }}"
+#     dest: /opt/nobm/data/redfish-{{ inventory_hostname }}.json
+
+  - name: Save RACADM Inventory
+    copy:
+      content: "{{ result_racadm }}"
+      dest: /opt/nobm/data/racadm-{{ inventory_hostname }}.json
