@@ -1,0 +1,19 @@
+---
+- hosts: PowerEdge
+  connection: local
+  gather_facts: False
+
+  tasks:
+
+  - name: Get all volume details
+    dellemc.openmanage.dellemc_idrac_storage_volume:
+      validate_certs: false
+      idrac_ip: "{{ obm_ip }}"
+      idrac_user: "{{ obm_user }}"
+      idrac_password: "{{ obm_password }}"
+      state: view
+    register: idrac_volume_results
+
+  - name: View all volume details
+    debug:
+      msg: "{{ idrac_volume_results }}"
