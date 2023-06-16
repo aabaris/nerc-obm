@@ -1,0 +1,25 @@
+---
+- hosts: PowerEdge
+  connection: local
+  gather_facts: False
+
+  tasks:
+
+  - name: throw a safety switch
+    set_fact:
+      check_yourself: "i will"
+
+  - name: check fw update 
+    dellemc.openmanage.idrac_firmware:
+      validate_certs: false
+      idrac_ip: "{{ obm_ip }}"
+      idrac_user: "{{ obm_user }}"
+      idrac_password: "{{ obm_password }}"
+      share_name: "https://downloads.dell.com"
+      # if we had a proxy for obm net or local repo, we could do this
+      #proxy_server: ######
+      #proxy_port: ####
+      reboot: False
+      job_wait: True
+      apply_update: False 
+    when: check_yourself == "i did"
