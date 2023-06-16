@@ -5,10 +5,6 @@
 
   tasks:
 
-  - name: throw a safety switch
-    set_fact:
-      check_yourself: "i will"
-
   - name: get server profile volume
     dellemc.openmanage.idrac_server_config_profile:
       validate_certs: false
@@ -16,7 +12,8 @@
       idrac_user: "{{ obm_user }}"
       idrac_password: "{{ obm_password }}"
       share_name: "/opt/nobm/data"
+      export_format: "JSON"
       scp_components:
         - BIOS
-      scp_file: {{ inventory_hostname }}-profile.json
-    when: check_yourself == "i did"
+      scp_file: "{{ inventory_hostname }}-profile.json"
+      job_wait: true

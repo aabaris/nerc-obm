@@ -69,9 +69,10 @@ def make_hostvars(rac_json):
 #a = process_rac(rac_data)
 #b = view_rac(rac_data)
 
-data_path = "../../../data/"
+data_path = "../data/"
+os.makedirs(data_path+"host_vars",exist_ok=True)
 
-for rac_file in os.listdir("../../../data"):
+for rac_file in os.listdir(data_path):
     if "racadm-hyp" in rac_file:
         with open(data_path+rac_file) as rac_f:
             rac_data = json.load(rac_f)
@@ -79,7 +80,7 @@ for rac_file in os.listdir("../../../data"):
         host_vars = yaml.dump(make_hostvars(rac_data),Dumper=IndentDumper)
         host_name = rac_file.replace('racadm-','')
         host_name = host_name.replace('.json','')
-        host_vars_file = data_path+host_name
+        host_vars_file = data_path+"host_vars/"+host_name
         print(host_vars_file)
         hvfh = open(host_vars_file,"w")
         hvfh.write(host_vars)
