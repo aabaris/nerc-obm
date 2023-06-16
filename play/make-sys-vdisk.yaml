@@ -1,0 +1,39 @@
+---
+- hosts: PowerEdge
+  connection: local
+  gather_facts: False
+
+  tasks:
+
+  - name: throw a safety switch
+    set_fact:
+      check_yourself: "i did"
+
+  - name: get volume info from inventory
+    set_fact:
+      pdisk_list: 
+        "{{ pdisk_list | default([]) + [ item.pdisk.name ] }}"
+    loop: "{{ pdisks }}"
+    when: item['pdisk']['size'] | int > 500
+
+  - name: list of vdisks to be wiped
+    debug:
+      msg: "{{ pdisk_list }}"
+    when: check_yourself == "i will" or check_yourself == "i did"
+
+  - name: create volume
+    dellemc.openmanage.dellemc_idrac_storage_volume:
+      validate_certs: false
+      idrac_ip: "{{ obm_ip }}"
+      idrac_user: "{{ obm_user }}"
+      idrac_password: "{{ obm_password }}"
+      state: "create"
+      controller_id: "RAID.Slot.5-1"
+      volume_type: "RAID 1"
+      span_depth: 1
+      span_length: 2
+      volumes:
+        - name: "system_disk"
+          drives:
+            id: "{{ pdisk_list }}"
+    when: check_yourself == "i did"

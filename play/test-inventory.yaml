@@ -1,0 +1,12 @@
+---
+- hosts: PowerEdge
+  connection: local
+  gather_facts: False
+
+  tasks:
+    - name: print host vars
+      debug:
+        msg: 
+          - "{{ dell_svc_tag }}"
+          - "{{ vdisks }}"
+

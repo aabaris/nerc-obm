@@ -1,0 +1,31 @@
+---
+- hosts: PowerEdge
+  connection: local
+  gather_facts: False
+
+  tasks:
+
+  - name: throw a safety switch
+    set_fact:
+      check_yourself: "i will"
+
+  - name: get volume info from inventory
+    set_fact:
+      vdisk_list: 
+        "{{ vdisk_list | default([]) + [ { 'name': item.vdisk.name }] }}"
+    loop: "{{ vdisks }}"
+
+  - name: list of vdisks to be wiped
+    debug:
+      msg: "{{ vdisk_list }}"
+    when: check_yourself == "i will" or check_yourself == "i did"
+
+  - name: delete volume
+    dellemc.openmanage.dellemc_idrac_storage_volume:
+      validate_certs: false
+      idrac_ip: "{{ obm_ip }}"
+      idrac_user: "{{ obm_user }}"
+      idrac_password: "{{ obm_password }}"
+      state: delete
+      volumes: "{{ vdisk_list }}"
+    when: check_yourself == "i did"
