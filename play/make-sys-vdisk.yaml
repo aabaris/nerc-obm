@@ -7,7 +7,7 @@
 
   - name: throw a safety switch
     set_fact:
-      check_yourself: "i did"
+      check_yourself: "i will"
 
   - name: get volume info from inventory
     set_fact:
