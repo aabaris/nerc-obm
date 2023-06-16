@@ -20,7 +20,7 @@
       msg: "{{ vdisk_list }}"
     when: check_yourself == "i will" or check_yourself == "i did"
 
-  - name: delete volume
+  - name: delete virtual volumes
     dellemc.openmanage.dellemc_idrac_storage_volume:
       validate_certs: false
       idrac_ip: "{{ obm_ip }}"

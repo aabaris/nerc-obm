@@ -78,6 +78,7 @@ for rac_file in os.listdir("../../../data"):
 
         host_vars = yaml.dump(make_hostvars(rac_data),Dumper=IndentDumper)
         host_name = rac_file.replace('racadm-','')
+        host_name = host_name.replace('.json','')
         host_vars_file = data_path+host_name
         print(host_vars_file)
         hvfh = open(host_vars_file,"w")

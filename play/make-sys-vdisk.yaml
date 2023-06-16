@@ -7,21 +7,21 @@
 
   - name: throw a safety switch
     set_fact:
-      check_yourself: "i will"
+      check_yourself: "i did"
 
-  - name: get volume info from inventory
+  - name: get pdisk info from inventory
     set_fact:
       pdisk_list: 
         "{{ pdisk_list | default([]) + [ item.pdisk.name ] }}"
     loop: "{{ pdisks }}"
     when: item['pdisk']['size'] | int > 500
 
-  - name: list of vdisks to be wiped
+  - name: list of pdisks to be used 
     debug:
       msg: "{{ pdisk_list }}"
     when: check_yourself == "i will" or check_yourself == "i did"
 
-  - name: create volume
+  - name: create system disk volume
     dellemc.openmanage.dellemc_idrac_storage_volume:
       validate_certs: false
       idrac_ip: "{{ obm_ip }}"
