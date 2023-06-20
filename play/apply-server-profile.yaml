@@ -1,0 +1,19 @@
+---
+- hosts: PowerEdge
+  connection: local
+  gather_facts: False
+
+  tasks:
+
+  - name: apply server profile settings
+    dellemc.openmanage.idrac_server_config_profile:
+      validate_certs: false
+      idrac_ip: "{{ obm_ip }}"
+      idrac_user: "{{ obm_user }}"
+      idrac_password: "{{ obm_password }}"
+      command: import
+      scp_components:
+        - BIOS
+      share_name: "/opt/nobm/play/files"
+      scp_file: "r740xd-settings.json"
+      job_wait: true

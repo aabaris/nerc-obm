@@ -1,0 +1,17 @@
+{
+    "SystemConfiguration": {
+        "Components": [
+	    {"FQDD": "BIOS.Setup.1-1",
+	        "Attributes": [
+		    {
+	                "Name": "NativeTrfcTiming",
+			"Value": "Enabled"
+		    },{
+		        "Name": "ProcX2Apic",
+			"Value": "Enabled"
+		    }
+		]
+	    }
+	]
+    }
+}
