@@ -9,6 +9,12 @@
 		    },{
 		        "Name": "ProcX2Apic",
 			"Value": "Enabled"
+		    },{
+		    	"Name": "InternalUsb",
+			"Value": "On"
+		    },{
+		        "Name": "OsWatchdogTimer",
+			"Value": "Disabled"
 		    }
 		]
 	    }
