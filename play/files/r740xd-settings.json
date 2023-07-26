@@ -15,6 +15,9 @@
 		    },{
 		        "Name": "OsWatchdogTimer",
 			"Value": "Disabled"
+		    },{
+		    	"Name": "SriovGlobalEnable",
+			"Value": "Disabled"
 		    }
 		]
 	    }

@@ -73,7 +73,7 @@ data_path = "../data/"
 os.makedirs(data_path+"host_vars",exist_ok=True)
 
 for rac_file in os.listdir(data_path):
-    if "racadm-hyp" in rac_file:
+    if "racadm-" in rac_file:
         with open(data_path+rac_file) as rac_f:
             rac_data = json.load(rac_f)
 
